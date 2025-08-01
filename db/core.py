@@ -1,16 +1,14 @@
-import os
+from config import settings
 from sqlalchemy import URL
-from dotenv import load_dotenv
 
-load_dotenv()
 
 url = URL.create(
-    "+".join([os.getenv("DB_DIALECT"), os.getenv("DB_API")]),
-    username=os.getenv("USER_NAME"),
-    password=os.getenv("USER_PASSWORD"),
-    host=os.getenv("HOST_NAME"),
-    port=os.getenv("PORT"),
-    database=os.getenv("DB_NAME")
+    f"{settings.db_dialect}+{settings.db_api}",
+    username=settings.user_name,
+    password=settings.user_password,
+    host=settings.host_name,
+    port=settings.port,
+    database=settings.db_name
 )
 
 if __name__ == "__main__":

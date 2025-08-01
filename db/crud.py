@@ -5,8 +5,9 @@ from schemes.user import UserSignUp
 from .models import User
 from typing import Optional
 from passlib.context import CryptContext
+from config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=settings.pwd_schemes, deprecated=settings.pwd_deprecated)
 
 async def get_user_by_email(user_email: str) -> Optional[User]:
     async with AsyncSessionLocal() as session:
