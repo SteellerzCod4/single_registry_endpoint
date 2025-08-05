@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 import uvicorn
 from routers.auth import auth_router
 from contextlib import asynccontextmanager
@@ -28,6 +30,14 @@ app.add_middleware(
 )
 
 app.include_router(auth_router)
+
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+
+
+@app.get("/", response_class=FileResponse)
+async def main_page():
+    return FileResponse("static/main_page.html", media_type="text/html")
+
 
 if __name__ == "__main__":
     uvicorn.run(

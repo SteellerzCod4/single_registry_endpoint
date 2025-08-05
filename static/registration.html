@@ -216,6 +216,7 @@
                     message.className = 'message success';
                     message.textContent = `Успешная регистрация! Добро пожаловать, ${result.username}!`;
                     message.style.display = 'block';
+                    window.location.href = '/';
                     
                     // Очищаем форму
                     document.getElementById('registrationForm').reset();
