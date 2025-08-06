@@ -20,6 +20,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+
 # Добавляем CORS middleware для работы с HTML формами
 app.add_middleware(
     CORSMiddleware,
@@ -31,7 +33,7 @@ app.add_middleware(
 
 app.include_router(auth_router)
 
-app.mount("/static", StaticFiles(directory="static", html=True), name="static")
+
 
 
 @app.get("/", response_class=FileResponse)

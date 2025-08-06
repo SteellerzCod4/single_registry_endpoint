@@ -9,7 +9,7 @@ auth_router = APIRouter(prefix="/auth", tags=["auth"])
 @auth_router.get("/registry", response_class=FileResponse)
 async def registry_page():
     """Возвращает HTML страницу с формой регистрации"""
-    return FileResponse("static/registration.html", media_type="text/html")
+    return FileResponse("templates/registration.html", media_type="text/html")
 
 
 @auth_router.post("/registry", response_model=UserResponse)
