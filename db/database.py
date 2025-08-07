@@ -18,12 +18,14 @@ AsyncSessionLocal = async_sessionmaker(
     autoflush=False,
 )
 
+async def get_async_session() -> AsyncSession:
+    async with AsyncSessionLocal() as session:
+        yield session
 
 async def init_db():
     """Инициализация базы данных"""
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-
 
 async def close_db():
     """Закрытие соединения с базой данных"""

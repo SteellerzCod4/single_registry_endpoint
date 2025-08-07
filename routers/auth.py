@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
+from sqlalchemy.ext.asyncio import AsyncSession
 from schemes.user import UserSignUp, UserResponse
 from db.crud import create_user
+from db.database import get_async_session
 
 auth_router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -13,6 +15,6 @@ async def registry_page():
 
 
 @auth_router.post("/registry", response_model=UserResponse)
-async def registry(user_data: UserSignUp) -> UserResponse:
-    user = await create_user(user_data)
+async def registry(user_data: UserSignUp, session: AsyncSession = Depends(get_async_session)) -> UserResponse:
+    user = await create_user(user_data, session)
     return user
